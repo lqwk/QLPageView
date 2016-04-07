@@ -12,6 +12,7 @@
 		B46434C91CB5EBB400A05699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B46434C71CB5EBB400A05699 /* Main.storyboard */; };
 		B46434CB1CB5EBB400A05699 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B46434CA1CB5EBB400A05699 /* Assets.xcassets */; };
 		B46434CE1CB5EBB400A05699 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B46434CC1CB5EBB400A05699 /* LaunchScreen.storyboard */; };
+		B46434D71CB5EC1E00A05699 /* QLPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B46434D61CB5EC1E00A05699 /* QLPageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,8 @@
 		B46434CA1CB5EBB400A05699 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B46434CD1CB5EBB400A05699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B46434CF1CB5EBB400A05699 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B46434D51CB5EC1E00A05699 /* QLPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLPageView.h; sourceTree = "<group>"; };
+		B46434D61CB5EC1E00A05699 /* QLPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLPageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +60,8 @@
 			children = (
 				B46434C11CB5EBB400A05699 /* AppDelegate.h */,
 				B46434C21CB5EBB400A05699 /* AppDelegate.m */,
+				B46434D51CB5EC1E00A05699 /* QLPageView.h */,
+				B46434D61CB5EC1E00A05699 /* QLPageView.m */,
 				B46434C71CB5EBB400A05699 /* Main.storyboard */,
 				B46434BE1CB5EBB400A05699 /* Supporting Files */,
 			);
@@ -145,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B46434C31CB5EBB400A05699 /* AppDelegate.m in Sources */,
+				B46434D71CB5EC1E00A05699 /* QLPageView.m in Sources */,
 				B46434C01CB5EBB400A05699 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
