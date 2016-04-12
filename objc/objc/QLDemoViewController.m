@@ -51,12 +51,21 @@
 
 - (NSString *)pageView:(QLPageView *)pageView titleForLabelForPageAtIndex:(NSInteger)index
 {
-    return @"Wed";
+    switch (index) {
+        case 0: return @"Mon"; break;
+        case 1: return @"Tue"; break;
+        case 2: return @"Wed"; break;
+        case 3: return @"Thu"; break;
+        case 4: return @"Fri"; break;
+        case 5: return @"Sat"; break;
+        default: break;
+    }
+    return @"";
 }
 
 - (NSString *)pageView:(QLPageView *)pageView titleForButtonForPageAtIndex:(NSInteger)index
 {
-    return @"6";
+    return [NSString stringWithFormat:@"%ld", (long)(index+1)];
 }
 
 - (UIView *)pageView:(QLPageView *)pageView viewForPageAtIndex:(NSInteger)index
@@ -65,7 +74,7 @@
     if ((index % 2) == 0)
         view.backgroundColor = [UIColor blackColor];
     else
-        view.backgroundColor = [UIColor whiteColor];
+        view.backgroundColor = [UIColor cyanColor];
     return view;
 }
 

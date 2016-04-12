@@ -64,9 +64,9 @@
 				B46434C11CB5EBB400A05699 /* AppDelegate.h */,
 				B46434C21CB5EBB400A05699 /* AppDelegate.m */,
 				B46434D51CB5EC1E00A05699 /* QLPageView.h */,
+				B46434D61CB5EC1E00A05699 /* QLPageView.m */,
 				B46434D81CB5F02200A05699 /* QLDemoViewController.h */,
 				B46434D91CB5F02200A05699 /* QLDemoViewController.m */,
-				B46434D61CB5EC1E00A05699 /* QLPageView.m */,
 				B46434C71CB5EBB400A05699 /* Main.storyboard */,
 				B46434BE1CB5EBB400A05699 /* Supporting Files */,
 			);
@@ -308,6 +308,7 @@
 				B46434D41CB5EBB400A05699 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -61,7 +61,7 @@
     if (self) {
         _pageViewStyle = QLPageViewButtonBarStyleDefault;
         _buttonBarHeight = 50.0;
-        _buttonBarColor = [UIColor colorWithRed:25.0/255 green:110.0/255 blue:180.0/255 alpha:1];
+        _buttonBarColor = [UIColor blackColor];
         _switchOnTintColor = [UIColor yellowColor];
         _buttonBarSelectionIndicatorColor = [UIColor whiteColor];
         _buttonFont = [UIFont fontWithName:@"Helvetica-Bold" size:14.0];
