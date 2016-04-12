@@ -54,7 +54,7 @@ enum ButtonBarStyle {
     }
     
     var buttonBarColor: UIColor = UIColor.blackColor()
-    var switchOnTintColor = UIColor.greenColor()
+    var switchOnTintColor = UIColor.yellowColor()
     var buttonFont = UIFont(name: "Helvetica-Bold", size: 14.0)!
     var labelFont = UIFont(name: "Helvetica", size: 10.0)!
     
