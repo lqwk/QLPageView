@@ -11,6 +11,8 @@
 		B4CDF5561CB8FC63009E55FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4CDF5541CB8FC63009E55FB /* Main.storyboard */; };
 		B4CDF5581CB8FC63009E55FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4CDF5571CB8FC63009E55FB /* Assets.xcassets */; };
 		B4CDF55B1CB8FC63009E55FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4CDF5591CB8FC63009E55FB /* LaunchScreen.storyboard */; };
+		B4CDF5631CB8FCD2009E55FB /* QLPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CDF5621CB8FCD2009E55FB /* QLPageView.swift */; };
+		B4E98D7D1CB9BF7800363D31 /* QLDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E98D7C1CB9BF7800363D31 /* QLDemoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		B4CDF5571CB8FC63009E55FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B4CDF55A1CB8FC63009E55FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B4CDF55C1CB8FC63009E55FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B4CDF5621CB8FCD2009E55FB /* QLPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QLPageView.swift; sourceTree = "<group>"; };
+		B4E98D7C1CB9BF7800363D31 /* QLDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QLDemoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,8 @@
 			isa = PBXGroup;
 			children = (
 				B4CDF5501CB8FC63009E55FB /* AppDelegate.swift */,
+				B4CDF5621CB8FCD2009E55FB /* QLPageView.swift */,
+				B4E98D7C1CB9BF7800363D31 /* QLDemoViewController.swift */,
 				B4CDF5541CB8FC63009E55FB /* Main.storyboard */,
 				B4CDF5571CB8FC63009E55FB /* Assets.xcassets */,
 				B4CDF5591CB8FC63009E55FB /* LaunchScreen.storyboard */,
@@ -132,7 +138,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4CDF5631CB8FCD2009E55FB /* QLPageView.swift in Sources */,
 				B4CDF5511CB8FC63009E55FB /* AppDelegate.swift in Sources */,
+				B4E98D7D1CB9BF7800363D31 /* QLDemoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +292,7 @@
 				B4CDF5611CB8FC63009E55FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
