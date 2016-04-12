@@ -15,25 +15,96 @@ enum ButtonBarStyle {
     case WithRightSwitch
 }
 
+// ------------------------------------------------------
+// This protocol represents the data model object
+// ------------------------------------------------------
 @objc protocol QLPageViewDataSource: class {
     
+    /**
+     Title of the button associated with the page at index.
+     */
     func titleForButtonForPageAtIndex(sender: QLPageView, index: Int) -> String
+    
+    /**
+     View of the page at index.
+     */
     func viewForPageAtIndex(sender: QLPageView, index: Int) -> UIView
+    
+    /**
+     The page where the page view starts, default is 0.
+     The initial displayed page always has index 0.
+     Index must be in range: 0 <= index < numberOfPages.
+     */
     optional func initialIndexForPageInPageView(sender: QLPageView) -> Int
+    
+    /**
+     The number of pages in the page view, default is 0.
+     Maximum number of pages is 6.
+     */
     optional func numberOfPagesInPageView(sender: QLPageView) -> Int
+    
+    /**
+     Title of the button associated with the page at index.
+     Only works if pageViewStyle is QLPageViewButtonStyleWithLabel.
+     Default is nil.
+     */
     optional func titleForLabelForPageAtIndex(sender: QLPageView, index: Int) -> String
+    
+    /**
+     Selected index for page view, default is initialIndex.
+     */
     optional func selectedIndexForPageView(sender: QLPageView) -> Int
 }
 
+// ------------------------------------------------------
+// This protocol represents the display and behaviour
+// ------------------------------------------------------
 @objc protocol QLPageViewDelegate: class {
     
+    /**
+     Sets the height for the button bar.
+     Default height is 50.0.
+     */
     optional func heightForButtonBarForPageView(sender: QLPageView) -> CGFloat
+    
+    /**
+     Sets the color of the button bar.
+     Default is black color.
+     */
     optional func colorForButtonBarForPageView(sender: QLPageView) -> UIColor
+    
+    /**
+     Sets the color of the button bar selection indicator.
+     Default is white color.
+     */
     optional func colorForButtonBarSelectionIndicatorForPageView(sender: QLPageView) -> UIColor
+    
+    /**
+     Sets the on tint color of the control switch.
+     Default is yellow color.
+     */
     optional func onTintColorForControlSwitchForPageView(sender: QLPageView) -> UIColor
+    
+    /**
+     Sets the font of the button.
+     Default font is Helvetica-Bold with size 14.0.
+     */
     optional func fontForButtonsForPageView(sender: QLPageView) -> UIFont
+    
+    /**
+     Sets the font of the label.
+     Default font is Helvetica with size 10.0.
+     */
     optional func fontForLabelsForPageView(sender: QLPageView) -> UIFont
+    
+    /**
+     Called when Control Switch changes value.
+     */
     optional func controlSwitchDidChangeValue(sender: QLPageView, value: Bool)
+    
+    /**
+     Called when page changed.
+     */
     optional func didMoveToPage(sender: QLPageView, page: Int)
 }
 
@@ -42,10 +113,35 @@ enum ButtonBarStyle {
     weak var dataSource: QLPageViewDataSource? = nil
     weak var delegate: QLPageViewDelegate? = nil
     
+    /**
+     The declared style of the pageView that defines the appearance of the button bar
+     */
     var pageViewStyle: ButtonBarStyle = .Default
+    
+    /**
+     Initial index of the page view
+     */
+    var initialIndex = 0
+    
+    /**
+     Number of pages in the page view
+     */
     var numberOfPages = 0
+    
+    /**
+     Height of the button bar
+     */
     var buttonBarHeight: CGFloat = 50.0
+    
+    /**
+     The control switch defined in the button bar, nil if pageViewStyle is not
+     .WithRightSwitch
+     */
     private(set) var controlSwitch: UISwitch? = nil
+    
+    /**
+     Currently selected page index.
+     */
     private(set) var selectedIndex = 0 {
         didSet {
             deselectButtonAtIndex(oldValue)
@@ -53,17 +149,63 @@ enum ButtonBarStyle {
         }
     }
     
+    /**
+     Color of button bar (also color of button titles).
+     Default color is black.
+     */
     var buttonBarColor: UIColor = UIColor.blackColor()
+    
+    /**
+     On tint color of the control switch.
+     Default color is yellow.
+     */
     var switchOnTintColor = UIColor.yellowColor()
+    
+    /**
+     Font of button bar buttons.
+     Default font is Helvetica-Bold with size 14.0.
+     */
     var buttonFont = UIFont(name: "Helvetica-Bold", size: 14.0)!
+    
+    /**
+     Font of button bar labels (if the labels exist).
+     Default font is Helvetica with size 10.0.
+     Can be nil unless pageViewStyle is .WithLabel.
+     */
     var labelFont = UIFont(name: "Helvetica", size: 10.0)!
     
+    
+    /**
+     Scroll view containing the views of the pages.
+     */
     private var containerScrollView: UIScrollView? = nil
+    
+    /**
+     View containing the buttons of the pages
+     */
     private var buttonBar: UIView? = nil
+    
+    /**
+     Circle used to indicate selected page
+     */
     private var selectionIndicator: UIView? = nil
+    
+    /**
+     Color of button bar selection indicator.
+     Default color is white.
+     */
     private var buttonBarSelectionIndicatorColor = UIColor.whiteColor()
+    
+    /**
+     Array that keeps hold of all buttons
+     */
     private var buttons = [UIButton]()
+    
+    /**
+     Array that keeps hold of all labels
+     */
     private var labels = [UILabel]()
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -86,6 +228,11 @@ enum ButtonBarStyle {
         if let selectedIndex = dataSource?.selectedIndexForPageView?(self) {
             self.selectedIndex = selectedIndex
         }
+        if let initialIndex = dataSource?.initialIndexForPageInPageView?(self) {
+            self.initialIndex = initialIndex
+        }
+        
+        selectedIndex = initialIndex
         
         // Remove all subviews
         for view in self.subviews {
@@ -290,6 +437,7 @@ enum ButtonBarStyle {
         let i = buttons.indexOf(sender)
         gotoPage(i!, animated: true)
     }
+    
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let pageWidth = CGRectGetWidth(containerScrollView!.frame)
