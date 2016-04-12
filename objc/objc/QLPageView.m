@@ -86,10 +86,14 @@
         return;
     }
     
-    NSInteger selectedIndex = self.selectedIndex;
     if (dataSourceCan.selectedIndexForPageView) {
-        selectedIndex = [self.dataSource selectedIndexForPageView:self];
+        self.selectedIndex = [self.dataSource selectedIndexForPageView:self];
     }
+    if (dataSourceCan.initialIndexForPageInPageView) {
+        self.initialIndex = [self.dataSource initialIndexForPageInPageView:self];
+    }
+    
+    self.selectedIndex = self.initialIndex;
     
     // Remove all subviews
     [self.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -99,8 +103,8 @@
     [self loadContainerScrollView];
     [self loadButtonBar];
     
-    [self gotoPage:selectedIndex animated:NO];
-    [self selectButtonAtIndex:selectedIndex];
+    [self gotoPage:self.selectedIndex animated:NO];
+    [self selectButtonAtIndex:self.selectedIndex];
 }
 
 - (void)setDataSource:(id<QLPageViewDataSource>)dataSource
@@ -115,6 +119,8 @@
 
 - (void)setDelegate:(id<QLPageViewDelegate>)delegate
 {
+    _delegate = delegate;
+    
     delegateCan.colorForButtonBarForPageView = [self.delegate respondsToSelector:@selector(colorForButtonBarForPageView:)];
     delegateCan.colorForButtonBarSelectionIndicatorForPageView = [self.delegate respondsToSelector:@selector(colorForButtonBarSelectionIndicatorForPageView:)];
     delegateCan.onTintColorForControlSwitchForPageView = [self.delegate respondsToSelector:@selector(onTintColorForControlSwitchForPageView:)];
@@ -129,22 +135,20 @@
 
 - (void)loadContainerScrollView
 {
-    CGFloat buttonBarHeight = self.buttonBarHeight;
     if (delegateCan.heightForButtonBarForPageView) {
-        buttonBarHeight = [self.delegate heightForButtonBarForPageView:self];
+        self.buttonBarHeight = [self.delegate heightForButtonBarForPageView:self];
     }
-    NSInteger numberOfPages = self.numberOfPages;
     if (dataSourceCan.numberOfPagesInPageView) {
-        numberOfPages = [self.dataSource numberOfPagesInPageView:self];
+        self.numberOfPages = [self.dataSource numberOfPagesInPageView:self];
     }
     
     // Initialize container scroll view
-    _containerScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, buttonBarHeight, self.frame.size.width, self.frame.size.height - buttonBarHeight)];
+    _containerScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.buttonBarHeight, self.frame.size.width, self.frame.size.height - self.buttonBarHeight)];
     
     [self addSubview:self.containerScrollView];
     
     // Setting the height to 1 will allow only horizontal scrolls
-    self.containerScrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame) * numberOfPages, 1);
+    self.containerScrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame) * self.numberOfPages, 1);
     
     self.containerScrollView.delegate = self;
     self.containerScrollView.pagingEnabled = YES;
@@ -153,7 +157,7 @@
     self.containerScrollView.directionalLockEnabled = YES;
     self.containerScrollView.bounces = NO;
     
-    for (NSInteger i = 0; i < numberOfPages ; i++) {
+    for (NSInteger i = 0; i < self.numberOfPages ; i++) {
         [self loadPageWithIndex:i];
     }
 }
@@ -176,19 +180,17 @@
 
 - (void)loadButtonBar
 {
-    CGFloat buttonBarHeight = self.buttonBarHeight;
     if (delegateCan.heightForButtonBarForPageView) {
-        buttonBarHeight = [self.delegate heightForButtonBarForPageView:self];
+        self.buttonBarHeight = [self.delegate heightForButtonBarForPageView:self];
     }
-    UIColor *buttonBarColor = self.buttonBarColor;
     if (delegateCan.colorForButtonBarForPageView) {
-        buttonBarColor = [self.delegate colorForButtonBarForPageView:self];
+        self.buttonBarColor = [self.delegate colorForButtonBarForPageView:self];
     }
     
     
     // Initialize button bar
-    _buttonBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, buttonBarHeight)];
-    self.buttonBar.backgroundColor = buttonBarColor;
+    _buttonBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.buttonBarHeight)];
+    self.buttonBar.backgroundColor = self.buttonBarColor;
     [self addSubview:self.buttonBar];
     
     [self loadButtons];
@@ -196,17 +198,14 @@
 
 - (void)loadButtons
 {
-    NSInteger numberOfPages = self.numberOfPages;
     if (dataSourceCan.numberOfPagesInPageView) {
-        numberOfPages = [self.dataSource numberOfPagesInPageView:self];
+        self.numberOfPages = [self.dataSource numberOfPagesInPageView:self];
     }
-    UIColor *selectionIndicatorColor = self.buttonBarSelectionIndicatorColor;
     if (delegateCan.colorForButtonBarSelectionIndicatorForPageView) {
-        selectionIndicatorColor = [self.delegate colorForButtonBarSelectionIndicatorForPageView:self];
+        self.buttonBarSelectionIndicatorColor = [self.delegate colorForButtonBarSelectionIndicatorForPageView:self];
     }
-    UIColor *buttonBarColor = self.buttonBarColor;
     if (delegateCan.colorForButtonBarForPageView) {
-        buttonBarColor = [self.delegate colorForButtonBarForPageView:self];
+        self.buttonBarColor = [self.delegate colorForButtonBarForPageView:self];
     }
     
     NSMutableArray *buttons = [[NSMutableArray alloc] initWithCapacity:0];
@@ -218,7 +217,7 @@
         {
             gapV = self.buttonBar.bounds.size.height/6.0;
             buttonWidth = 4.0*gapV;
-            gapH = (self.buttonBar.bounds.size.width - numberOfPages*buttonWidth - (((numberOfPages-1) < 0) ? 0 : (numberOfPages-1))*2*gapV)/2.0;
+            gapH = (self.buttonBar.bounds.size.width - self.numberOfPages*buttonWidth - (((self.numberOfPages-1) < 0) ? 0 : (self.numberOfPages-1))*2*gapV)/2.0;
             selectionIndicatorY = gapV;
             
             break;
@@ -230,7 +229,7 @@
             gapV = self.buttonBar.bounds.size.height/7.0;
             buttonWidth = 4.0*gapV;
             labelWidth = 1.5*gapV;
-            gapH = (self.buttonBar.bounds.size.width - numberOfPages*buttonWidth - (((numberOfPages-1) < 0) ? 0 : (numberOfPages-1))*2*gapV)/2.0;
+            gapH = (self.buttonBar.bounds.size.width - self.numberOfPages*buttonWidth - (((self.numberOfPages-1) < 0) ? 0 : (self.numberOfPages-1))*2*gapV)/2.0;
             selectionIndicatorY = 2*gapV;
             
             break;
@@ -254,7 +253,7 @@
             CGFloat contentWidth = switchX;
             gapV = self.buttonBar.bounds.size.height/6.0;
             buttonWidth = 4.0*gapV;
-            gapH = (contentWidth - numberOfPages*buttonWidth) / (numberOfPages+1);
+            gapH = (contentWidth - self.numberOfPages*buttonWidth) / (self.numberOfPages+1);
             selectionIndicatorY = gapV;
             
             break;
@@ -265,12 +264,12 @@
     
     // Load selection indicator
     _selectionIndicator = [[UIView alloc] initWithFrame:CGRectMake(gapH, selectionIndicatorY, buttonWidth, buttonWidth)];
-    self.selectionIndicator.backgroundColor = selectionIndicatorColor;
+    self.selectionIndicator.backgroundColor = self.buttonBarSelectionIndicatorColor;
     self.selectionIndicator.layer.cornerRadius = 2*gapV;
     [self.buttonBar addSubview:self.selectionIndicator];
     
     // Load buttons & Labels
-    for (NSInteger i = 0; i < numberOfPages; i++) {
+    for (NSInteger i = 0; i < self.numberOfPages; i++) {
         // Add buttons
         UIButton *button;
         switch (self.pageViewStyle)
@@ -293,7 +292,7 @@
                     label.text = @"";
                 }
                 label.font = self.labelFont;
-                label.textColor = selectionIndicatorColor;
+                label.textColor = self.buttonBarSelectionIndicatorColor;
                 label.textAlignment = NSTextAlignmentCenter;
                 label.userInteractionEnabled = NO;
                 [self.buttonBar addSubview:label];
@@ -313,7 +312,7 @@
         button.layer.cornerRadius = 2*gapV;
         button.backgroundColor = [UIColor clearColor];
         [button setTitle:[self.dataSource pageView:self titleForButtonForPageAtIndex:i] forState:UIControlStateNormal];
-        [button setTitleColor:selectionIndicatorColor forState:UIControlStateNormal];
+        [button setTitleColor:self.buttonBarSelectionIndicatorColor forState:UIControlStateNormal];
         button.titleLabel.font = self.buttonFont;
         button.titleLabel.textAlignment = NSTextAlignmentCenter;
         [button addTarget:self action:@selector(selectPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -335,25 +334,23 @@
 
 - (void)selectButtonAtIndex:(NSInteger)index
 {
-    UIColor *buttonBarColor = self.buttonBarColor;
     if (delegateCan.colorForButtonBarForPageView) {
-        buttonBarColor = [self.delegate colorForButtonBarForPageView:self];
+        self.buttonBarColor = [self.delegate colorForButtonBarForPageView:self];
     }
     if ([self.buttons count]) {
         UIButton *button = [self.buttons objectAtIndex:index];
-        [button setTitleColor:buttonBarColor forState:UIControlStateNormal];
+        [button setTitleColor:self.buttonBarColor forState:UIControlStateNormal];
     }
 }
 
 - (void)deselectButtonAtIndex:(NSInteger)index
 {
-    UIColor *selectionIndicatorColor = self.buttonBarSelectionIndicatorColor;
     if (delegateCan.colorForButtonBarSelectionIndicatorForPageView) {
-        selectionIndicatorColor = [self.delegate colorForButtonBarSelectionIndicatorForPageView:self];
+        self.buttonBarSelectionIndicatorColor = [self.delegate colorForButtonBarSelectionIndicatorForPageView:self];
     }
     if ([self.buttons count]) {
         UIButton *button = [self.buttons objectAtIndex:index];
-        [button setTitleColor:selectionIndicatorColor forState:UIControlStateNormal];
+        [button setTitleColor:self.buttonBarSelectionIndicatorColor forState:UIControlStateNormal];
     }
 }
 

@@ -38,9 +38,19 @@ typedef enum {
  */
 @property (nonatomic, readonly) NSInteger selectedIndex;
 
+/**
+ Initial index of the page view
+ */
 @property (nonatomic) NSInteger initialIndex;
+
+/**
+ Number of pages in the page view
+ */
 @property (nonatomic) NSInteger numberOfPages;
 
+/**
+ Height of the button bar
+ */
 @property (nonatomic) CGFloat buttonBarHeight;
 
 
@@ -48,7 +58,7 @@ typedef enum {
 
 /**
  Color of button bar (also color of button titles).
- Default color is blue.
+ Default color is black.
  */
 @property (nonatomic, strong) UIColor *buttonBarColor;
 
@@ -140,7 +150,7 @@ typedef enum {
 
 /**
  Sets the color of the button bar.
- Default is blue color.
+ Default is black color.
  */
 - (UIColor *)colorForButtonBarForPageView:(QLPageView *)pageView;
 
