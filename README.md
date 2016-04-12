@@ -15,16 +15,19 @@ Add the following file to your project `QLPageView.swift`.
 ## Data Source Required Methods
 
 Implement the following method to specify the title for the button in the button bar for each page.
+
 **Objective-C:**
 ```
 - (NSString *)pageView:(QLPageView *)pageView titleForButtonForPageAtIndex:(NSInteger)index
 ```
+
 **Swift:**
 ```
 func titleForButtonForPageAtIndex(sender: QLPageView, index: Int) -> String
 ```
 
 Implement the following method to specify the actual view for each page.
+
 **Objective-C:**
 ```
 - (UIView *)pageView:(QLPageView *)pageView viewForPageAtIndex:(NSInteger)index
