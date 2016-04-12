@@ -36,11 +36,20 @@ class QLDemoViewController: UIViewController, QLPageViewDelegate, QLPageViewData
     }
     
     func titleForLabelForPageAtIndex(sender: QLPageView, index: Int) -> String {
-        return "Wed"
+        switch index {
+        case 0: return "Mon"
+        case 1: return "Tue"
+        case 2: return "Wed"
+        case 3: return "Thu"
+        case 4: return "Fri"
+        case 5: return "Sat"
+        default: break
+        }
+        return ""
     }
     
     func titleForButtonForPageAtIndex(sender: QLPageView, index: Int) -> String {
-        return "6"
+        return "\(index+1)"
     }
     
     func viewForPageAtIndex(sender: QLPageView, index: Int) -> UIView {
@@ -48,7 +57,7 @@ class QLDemoViewController: UIViewController, QLPageViewDelegate, QLPageViewData
         if index % 2 == 0 {
             view.backgroundColor = UIColor.blackColor()
         } else {
-            view.backgroundColor = UIColor.blueColor()
+            view.backgroundColor = UIColor.cyanColor()
         }
         return view
     }
