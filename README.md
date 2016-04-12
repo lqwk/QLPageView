@@ -35,7 +35,7 @@ Implement the following method to specify the actual view for each page.
 
 **Swift:**
 ```
-viewForPageAtIndex(sender: QLPageView, index: Int) -> UIView
+func viewForPageAtIndex(sender: QLPageView, index: Int) -> UIView
 ```
 
 ## Other Data Source & Delegate Methods
