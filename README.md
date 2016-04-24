@@ -17,24 +17,24 @@ Add the following file to your project `QLPageView.swift`.
 Implement the following method to specify the title for the button in the button bar for each page.
 
 **Objective-C:**
-```
+```objective-c
 - (NSString *)pageView:(QLPageView *)pageView titleForButtonForPageAtIndex:(NSInteger)index
 ```
 
 **Swift:**
-```
+```swift
 func titleForButtonForPageAtIndex(sender: QLPageView, index: Int) -> String
 ```
 
 Implement the following method to specify the actual view for each page.
 
 **Objective-C:**
-```
+```objective-c
 - (UIView *)pageView:(QLPageView *)pageView viewForPageAtIndex:(NSInteger)index
 ```
 
 **Swift:**
-```
+```swift
 func viewForPageAtIndex(sender: QLPageView, index: Int) -> UIView
 ```
 
@@ -47,7 +47,7 @@ Other delegate methods are used for customization of the pageView and the docume
 ### Objective-C
 
 **`QLDemoViewController.h`**
-```
+```objective-c
 #import <UIKit/UIKit.h>
 
 @interface QLDemoViewController : UIViewController
@@ -56,7 +56,7 @@ Other delegate methods are used for customization of the pageView and the docume
 ```
 
 **`QLDemoViewController.m`**
-```
+```objective-c
 #import "QLDemoViewController.h"
 #import "QLPageView.h"
 
@@ -135,7 +135,7 @@ Other delegate methods are used for customization of the pageView and the docume
 ### Swift
 
 **`QLDemoViewController.swift`**
-```
+```swift
 import Foundation
 import UIKit
 
